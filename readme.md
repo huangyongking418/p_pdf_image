@@ -4,6 +4,8 @@
 
 文件通过本机服务完成转换，不需要上传到第三方服务。
 
+GitHub 仓库：<https://github.com/huangyongking418/p_pdf_image>
+
 ## 功能
 
 - 支持 `.ppt` 和 `.pptx` 文件，可点击选择或拖拽上传
@@ -12,7 +14,7 @@
 - 支持 72、150、300 DPI 三档输出分辨率
 - 支持导出当前页，或批量下载全部页面 ZIP
 - 提供 Web 开发模式和 Electron 桌面端构建配置
-- 附带 Windows 便携版启动脚本
+- 附带 Windows 便携版启动脚本和本地构建配置
 
 ## 转换流程
 
@@ -97,7 +99,13 @@ Electron 构建结果输出到 `dist_electron/`。
 
 ### Windows 便携版
 
-仓库中的 `dist_portable/` 是已经整理好的便携版目录，不是单个 EXE：
+本项目的完整开发目录中包含已经整理好的 `dist_portable/` 便携版，但不是单个 EXE。GitHub 仓库只保留其中的启动脚本和项目文件；以下生成内容未提交：
+
+- `dist_portable/node/node.exe`：约 87 MB 的 Node.js 运行环境
+- `dist_portable/node_modules/`：本地安装的生产依赖
+- `dist_portable/dist/`：Vue 构建产物
+
+因此，从 GitHub 直接下载源码后，不能仅依赖 `start.bat` 运行便携版，需要先构建前端并准备本地依赖。目录结构如下：
 
 ```text
 dist_portable/
@@ -110,6 +118,8 @@ dist_portable/
 ```
 
 使用方法：
+
+在完整的本地便携版中：
 
 1. 将整个 `dist_portable/` 文件夹复制到目标电脑。
 2. 在目标电脑安装 LibreOffice。
@@ -138,7 +148,7 @@ dist_portable/
 │   │   ├── PreviewPanel.vue
 │   │   └── Settings.vue
 │   └── utils/api.js         # 前端与本地服务通信
-├── dist_portable/           # Windows 便携版
+├── dist_portable/           # Windows 便携版脚本与项目文件
 ├── package.json
 └── vite.config.js
 ```
@@ -176,10 +186,10 @@ dist_portable/
 
 LibreOffice、Poppler 和图片处理需要直接操作本机文件与进程，放在本地服务中比纯浏览器方案更稳定，也能避免演示文稿被上传到互联网。
 
-## 发布到 GitHub 前
+## 已知限制
 
-- 确认 README 中的安装步骤在本机重新验证通过。
-- 检查 `dist_portable/`、构建产物和临时文件是否确实需要纳入版本控制。
-- 不要提交 `.tmp/`、`node_modules/`、日志文件或包含隐私内容的演示文稿。
-- 根据需要添加 `LICENSE` 文件，明确项目的开源许可方式。
-- 如果提供 Releases 下载，可将便携版压缩包或 Electron 安装包上传到 GitHub Releases。
+- 当前主要在 Windows 上开发和验证。
+- `server/services/pdf2png.js` 仍使用固定的 `pdftoppm.exe` 路径，跨设备使用前需要调整。
+- GitHub 仓库不包含大型 Node.js 运行环境、`node_modules/` 和前端构建产物。
+- 项目尚未添加 `LICENSE`；在明确授权方式前，请勿默认本项目可以用于商业分发。
+- 如果后续提供 GitHub Releases，可以将完整的便携版压缩包或 Electron 安装包作为发布资源上传。
