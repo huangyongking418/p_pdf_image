@@ -14,7 +14,7 @@ GitHub 仓库：<https://github.com/huangyongking418/p_pdf_image>
 - 支持 72、150、300 DPI 三档输出分辨率
 - 支持导出当前页，或批量下载全部页面 ZIP
 - 提供 Web 开发模式和 Electron 桌面端构建配置
-- 附带 Windows 便携版启动脚本和本地构建配置
+- 附带 Windows 便携版启动脚本、Node.js 运行环境和本地构建配置
 
 ## 转换流程
 
@@ -99,13 +99,18 @@ Electron 构建结果输出到 `dist_electron/`。
 
 ### Windows 便携版
 
-本项目的完整开发目录中包含已经整理好的 `dist_portable/` 便携版，但不是单个 EXE。GitHub 仓库只保留其中的启动脚本和项目文件；以下生成内容未提交：
+本项目的完整开发目录中包含已经整理好的 `dist_portable/` 便携版，但不是单个 EXE。GitHub 仓库当前已包含：
 
-- `dist_portable/node/node.exe`：约 87 MB 的 Node.js 运行环境
+- `dist_portable/node/node.exe`：约 87.15 MB 的 Node.js 运行环境
+- `dist_portable/start.bat` 和 `dist_portable/stop.bat`：便携版启动、停止脚本
+- `dist_portable/server/`：便携版使用的本地服务代码
+
+以下生成内容仍未提交：
+
 - `dist_portable/node_modules/`：本地安装的生产依赖
 - `dist_portable/dist/`：Vue 构建产物
 
-因此，从 GitHub 直接下载源码后，不能仅依赖 `start.bat` 运行便携版，需要先构建前端并准备本地依赖。目录结构如下：
+因此，从 GitHub 克隆项目后，不能仅依赖 `start.bat` 运行便携版，还需要安装依赖并构建前端，或手动补齐 `node_modules/` 和 `dist/`。目录结构如下：
 
 ```text
 dist_portable/
@@ -190,6 +195,7 @@ LibreOffice、Poppler 和图片处理需要直接操作本机文件与进程，�
 
 - 当前主要在 Windows 上开发和验证。
 - `server/services/pdf2png.js` 仍使用固定的 `pdftoppm.exe` 路径，跨设备使用前需要调整。
-- GitHub 仓库不包含大型 Node.js 运行环境、`node_modules/` 和前端构建产物。
+- GitHub 仓库包含约 87.15 MB 的 `dist_portable/node/node.exe`，克隆体积会相对较大；但仍不包含 `node_modules/` 和前端构建产物。
+- `node.exe` 超过 GitHub 推荐的 50 MB 单文件大小。未来连续提交多个二进制版本时，建议改用 Git LFS 或 GitHub Releases。
 - 项目尚未添加 `LICENSE`；在明确授权方式前，请勿默认本项目可以用于商业分发。
 - 如果后续提供 GitHub Releases，可以将完整的便携版压缩包或 Electron 安装包作为发布资源上传。
