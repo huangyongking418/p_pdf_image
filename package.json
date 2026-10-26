@@ -1,0 +1,48 @@
+{
+  "name": "p_pdf_image",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev:vue": "vite",
+    "dev:server": "node server/index.js",
+    "dev": "concurrently --kill-others \"npm run dev:vue\" \"npm run dev:server\"",
+    "dev:electron": "concurrently --kill-others \"npm run dev:vue\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "vite build",
+    "build:electron": "vite build && electron-builder",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "express": "^4.22.2",
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "concurrently": "^9.2.3",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "vite": "^6.4.3",
+    "vue": "^3.5.39",
+    "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "com.ppt2image.app",
+    "productName": "PPT To Image",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "files": [
+      "dist/**/*",
+      "server/**/*",
+      "electron/**/*"
+    ],
+    "win": {
+      "target": "portable"
+    }
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.62.2"
+  }
+}
