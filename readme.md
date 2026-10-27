@@ -6,6 +6,10 @@
 
 GitHub 仓库：<https://github.com/huangyongking418/p_pdf_image>
 
+## 页面预览
+
+![PPT 转高清图片程序首页](docs/program-page.png)
+
 ## 功能
 
 - 支持 `.ppt` 和 `.pptx` 文件，可点击选择或拖拽上传
